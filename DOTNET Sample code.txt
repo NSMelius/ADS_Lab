@@ -1,0 +1,99 @@
+//On Line 10 
+using TwinCAT.Ads;
+using TwinCAT.Ads.TypeSystem;
+using TwinCAT.TypeSystem;
+
+
+//on Line 18
+private AdsClient client;
+private AmsAddress targetAddress;
+private string AmsNetId = "127.0.0.1.1.1";
+private int port = 851;
+
+
+//on Line 27
+targetAddress = new AmsAddress(AmsNetId, port);
+client = new AdsClient(AdsClientSettings.Default);
+client.Connect(targetAddress);
+uint integerHandle, incrementHandle, limitHandle, stringHandle;
+
+
+integerHandle = client.CreateVariableHandle("MAIN.nInteger");
+incrementHandle = client.CreateVariableHandle("MAIN.nIncrement");
+limitHandle = client.CreateVariableHandle("MAIN.nLimit");
+var value = client.ReadAny(integerHandle, typeof(UInt16));
+textBox1.Text = value.ToString();
+value = client.ReadAny(incrementHandle, typeof(UInt16));
+textBox2.Text = value.ToString();
+value = client.ReadAny(limitHandle, typeof(UInt16));
+textBox3.Text = value.ToString();
+stringHandle = client.CreateVariableHandle("MAIN.sString");
+int bytesize = 81; //string of 80 characters + /0
+PrimitiveTypeMarshaler converter = new PrimitiveTypeMarshaler(StringMarshaler.DefaultEncoding);
+byte[] buffer = new byte[bytesize];
+value = client.Read(stringHandle, buffer.AsMemory());
+string text;
+converter.Unmarshal<string>(buffer.AsSpan(),out text);
+textBox4.Text = text;
+client.DeleteVariableHandle(integerHandle);
+client.DeleteVariableHandle(incrementHandle);
+client.DeleteVariableHandle(limitHandle);
+client.DeleteVariableHandle(stringHandle);
+
+
+//button1_Click
+uint value;
+value = client.ReadValue<uint>("MAIN.nInteger");
+textBox1.Text = value.ToString();
+
+
+//button2_Click
+uint Handle;
+Handle = client.CreateVariableHandle("MAIN.nIncrement");
+UInt16 value = UInt16.Parse(textBox2.Text);
+client.WriteAny(Handle, value);
+client.DeleteVariableHandle(Handle);
+
+
+//button3_Click
+IAdsSymbol symbol = client.ReadSymbol("MAIN.nLimit");
+uint value = uint.Parse(textBox3.Text);
+client.WriteValue(symbol, value);
+
+
+//button4_Click
+int byteSize = 81;
+PrimitiveTypeMarshaler converter = new PrimitiveTypeMarshaler(StringMarshaler.DefaultEncoding);
+byte[] buffer = new byte[byteSize];
+
+
+string value = textBox4.Text;
+converter.Marshal(value, buffer);
+
+uint Handle = client.CreateVariableHandle("MAIN.sString");
+
+client.Write(Handle,buffer);
+
+client.DeleteVariableHandle(Handle);
+
+
+//button5_Click
+StateInfo stateInfo = client.ReadState();
+switch(stateInfo.AdsState)
+{
+    case AdsState.Config:
+        textBox5.Text = "Config";
+        break;
+    case AdsState.Run:
+        textBox5.Text = "Run";
+        break;
+    case AdsState.Stop:
+        textBox5.Text = "Stop";
+        break;
+    case AdsState.Error:
+    case AdsState.Exception:
+    default:
+        textBox5.Text = "ERROR";
+        break;
+
+            }

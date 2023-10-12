@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33927.289
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdsSumCommandSample", "AdsSumCommandSample\AdsSumCommandSample.csproj", "{9340DDF2-26D8-49F5-9179-DE05C3E0A797}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9340DDF2-26D8-49F5-9179-DE05C3E0A797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9340DDF2-26D8-49F5-9179-DE05C3E0A797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9340DDF2-26D8-49F5-9179-DE05C3E0A797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9340DDF2-26D8-49F5-9179-DE05C3E0A797}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA3360B1-D249-485E-A115-48E2941A6019}
+	EndGlobalSection
+EndGlobal
